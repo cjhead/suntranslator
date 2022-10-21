@@ -3,11 +3,16 @@ from tkinter import Tk
 from gui.menubar import Menubar
 from gui.views.translator_view import EntryView
 
+from importlib.resources import path
+
 
 class App(Tk):
     def __init__(self):
         super().__init__()
         self.title = "Sun Translator"
+        self.cfg = path('config', 'config')
+
+        self.option_readfile(self.cfg)
         self.rowconfigure(0, weight=1, minsize=200)
         self.columnconfigure(0, weight=1, minsize=200)
 
