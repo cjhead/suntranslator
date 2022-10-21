@@ -17,6 +17,8 @@ class Menubar:
         self.menubar.add_cascade(menu=self.help_, label="Help")
 
         self.file.add_command(label="New")
+        self.file.add_command(label="Open",
+                              command=parent.views["EntryView"].open)
         self.file.add_command(label="Save",
                               command=parent.views["EntryView"].save)
         self.file.add_command(label="Quit", command=parent.quit)
