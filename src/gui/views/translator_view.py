@@ -43,7 +43,6 @@ class EntryView(ttk.Frame):
         self.buttonFrame.grid(row=0, column=0)
 
         self.translateButton = ttk.Button(self.buttonFrame, text="Translate",
-                                          style='Tbutton.TButton',
                                           command=self.translate)
         self.translateButton.grid(row=0, column=0,
                                   sticky=tk.N+tk.E+tk.W)
@@ -81,6 +80,9 @@ class EntryView(ttk.Frame):
         filename = filedialog.asksaveasfilename(filetypes=[("PDF", "*.pdf")],
                                                 defaultextension='.pdf',
                                                 title="Save As")
+        if not filename:
+            return
+
         text = self.translatedText.get('1.0', 'end')
         self.translator.saveToPdf(text, filename)
 
@@ -88,6 +90,8 @@ class EntryView(ttk.Frame):
         filename = filedialog.askopenfilename(title="Open File",
                                               filetypes=[("text", "*.txt")],
                                               defaultextension=".txt")
+        if not filename:
+            return
 
         with open(filename, 'r') as fh:
             text = fh.read()
@@ -98,6 +102,8 @@ class EntryView(ttk.Frame):
         filename = filedialog.asksaveasfilename(title="Save As",
                                                 filetypes=[("text", "*.txt")],
                                                 defaultextension=".txt")
+        if not filename:
+            return
 
         text = self.textEntry.get('1.0', 'end')
         with open(filename, 'w') as fh:
