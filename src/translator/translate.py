@@ -1,22 +1,25 @@
 import csv
 from fpdf import FPDF
 
-from importlib.resources import path
+from importlib.resources import files, as_file
 
 
 class Translator:
     def __init__(self):
-        self.dict_file = path('data.symbols', 'sun_dictionary.csv')
-        self.font_path = path('data.fonts', 'SUN7_8_1210.ttf')
+
+        self.dict_file = as_file(files('data.symbols').joinpath('sun_dictionary.csv'))
+        with as_file(files('data.fonts').joinpath('SUN7_8_1210.ttf')) as file:
+            self.font_path = file
         self.sun_symbols = self.create_dict()
 
     def create_dict(self):
 
         sun_dict = {}
-        with open(self.dict_file) as file:
-            reader = csv.reader(file)
-            for row in reader:
-                sun_dict[row[0]] = row[1]
+        with self.dict_file as dict_file:
+            with open(dict_file) as file:
+                reader = csv.reader(file)
+                for row in reader:
+                    sun_dict[row[0]] = row[1]
 
         return sun_dict
 
@@ -43,6 +46,7 @@ class Translator:
 
     def saveToPdf(self, text, save_file):
         pdf = FPDF(format="letter", unit="in")
+        print(self.font_path)
         pdf.add_font(
             'SUN7_8_1210', '',
             fname=self.font_path)
