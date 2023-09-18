@@ -1,19 +1,15 @@
 import csv
 from fpdf import FPDF
-
 from importlib.resources import files, as_file
-
 
 class Translator:
     def __init__(self):
-
         self.dict_file = as_file(files('data.symbols').joinpath('sun_dictionary.csv'))
         with as_file(files('data.fonts').joinpath('SUN7_8_1210.ttf')) as file:
             self.font_path = file
         self.sun_symbols = self.create_dict()
 
     def create_dict(self):
-
         sun_dict = {}
         with self.dict_file as dict_file:
             with open(dict_file) as file:
@@ -24,7 +20,6 @@ class Translator:
         return sun_dict
 
     def translateText(self, text):
-
         string_translated = []
         no_translation = []
 
