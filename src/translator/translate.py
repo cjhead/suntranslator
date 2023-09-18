@@ -1,4 +1,5 @@
 import csv
+import re
 from fpdf import FPDF
 from importlib.resources import files, as_file
 
@@ -18,6 +19,25 @@ class Translator:
                     sun_dict[row[0]] = row[1]
 
         return sun_dict
+
+    def clean_text(self, text):
+        '''
+        Cleans the given text
+
+        Returns the given text as:
+            - lowercase
+            - with condensed linefeeds
+
+        Parameters
+        ----------
+        text : str
+            The body of text to be cleaned. Can be the full text, sentences,
+            or words.
+        '''
+        text = text.lower()
+        text = re.sub('\n{2,}|\n', ' ', text)
+
+        return text
 
     def translateText(self, text):
         string_translated = []
