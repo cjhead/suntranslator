@@ -2,13 +2,16 @@ import csv
 import re
 from fpdf import FPDF
 from importlib.resources import files, as_file
+from nltk.corpus import stopwords
 
 class Translator:
     def __init__(self):
+        self.stopwords = []
         self.dict_file = as_file(files('data.symbols').joinpath('sun_dictionary.csv'))
         with as_file(files('data.fonts').joinpath('SUN7_8_1210.ttf')) as file:
             self.font_path = file
         self.sun_symbols = self.create_dict()
+        self.stopwords = self.get_stopwords()
 
     def create_dict(self):
         sun_dict = {}
@@ -19,6 +22,25 @@ class Translator:
                     sun_dict[row[0]] = row[1]
 
         return sun_dict
+
+    def get_stopwords(self):
+        '''Returns a list of stop words which don't have a Sun symbol'''
+        stop_words = stopwords.words('english')
+        stop_words = [word for word in stop_words if word not in self.sun_symbols]
+
+        return stop_words
+
+    def remove_stopwords(self, words):
+        '''
+        Removes stop words from the given list of words
+
+        Parameters
+        ----------
+        words : list
+            The list of words from which the stop words should be removed.
+        '''
+        words = [word for word in words if word not in self.stopwords]
+        return words
 
     def clean_text(self, text):
         '''
