@@ -28,6 +28,9 @@ dynamic = ["version"]
 
 [tool.setuptools_scm]
 
+[tool.pylint]
+init-hook = "import sys; sys.path.append('lib/python3.11/site-packages')"
+
 [project.gui-scripts]
 suntranslator = "suntranslator:main"
 
