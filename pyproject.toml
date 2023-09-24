@@ -12,6 +12,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "fpdf2",
+    "nltk",
 ]
 authors = [
     { name="Carl Head", email="chead@linuxmail.org" },
